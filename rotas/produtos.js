@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error){return res.status(500).send({error: error}) }
         conn.query(
-            'SELECT * FROM clientes;',
+            'SELECT * FROM produtos;',
             (error, resultado, fields) => {
                 if (error){return res.status(500).send({error: error}) }
                 return res.status(200).send({response: resultado})
@@ -19,13 +19,13 @@ router.get('/', (req, res, next) => {
     })
 });
 
-router.get('/:id_cliente', (req, res, next) => {
+router.get('/:id_produto', (req, res, next) => {
     
     mysql.getConnection((error, conn) => {
         if (error){return res.status(500).send({error: error}) }
         conn.query(
-            'SELECT * FROM clientes WHERE id_cliente = ?',
-            [req.params.id_cliente],
+            'SELECT * FROM produtos WHERE id_produto = ?',
+            [req.params.id_produto],
             (error, resultado, fields) => {
                 if (error){return res.status(500).send({error: error}) }
                 return res.status(200).send({response: resultado})
@@ -40,14 +40,14 @@ router.post('/', jsonParser, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error){return res.status(500).send({error: error}) }
         conn.query(
-            'INSERT INTO clientes (nome, cpf, sexo, email) VALUES (?, ?, ?, ?)',
-            [req.body.nome, req.body.cpf, req.body.sexo, req.body.email],
+            'INSERT INTO produtos (nome, cor, tamanho, valor) VALUES (?, ?, ?, ?)',
+            [req.body.nome, req.body.cor, req.body.tamanho, req.body.valor],
             (error, resultado, fields) => {
                 conn.release();
                 if (error){return res.status(500).send({error: error}); }
                 res.status(201).send({
-                    mensagem: 'Cliente Inserido com sucesso',
-                    id_cliente: resultado.insertId
+                    mensagem: 'Produto Inserido com sucesso',
+                    id_produto: resultado.insertId
                 });
             }
         )
@@ -59,22 +59,22 @@ router.put('/', jsonParser, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error){return res.status(500).send({error: error}) }
         conn.query(
-            `UPDATE clientes
+            `UPDATE produtos
                 SET nome = ?,
-                    cpf = ?,
-                    sexo = ?,
-                    email = ?
-                WHERE id_cliente = ?    `,
+                    cor = ?,
+                    tamanho = ?,
+                    valor = ?
+                WHERE id_produto = ?    `,
             [req.body.nome, 
-             req.body.cpf, 
-             req.body.sexo, 
-             req.body.email, 
-             req.body.id_cliente],
+             req.body.cor, 
+             req.body.tamanho, 
+             req.body.valor, 
+             req.body.id_produto],
             (error, resultado, fields) => {
                 conn.release();
                 if (error){return res.status(500).send({error: error}); }
                 res.status(202).send({
-                    mensagem: 'Cliente Atualizado com sucesso',
+                    mensagem: 'Produto Atualizado com sucesso',
                 });
             }
         )
@@ -86,13 +86,13 @@ router.delete('/', jsonParser, (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error){return res.status(500).send({error: error}) }
         conn.query(
-            'DELETE FROM clientes WHERE id_cliente = ?',
+            'DELETE FROM produtos WHERE id_produto = ?',
             [req.body.id_cliente],
             (error, resultado, fields) => {
                 conn.release();
                 if (error){return res.status(500).send({error: error}); }
                 res.status(202).send({
-                    mensagem: 'Cliente Removido com sucesso',
+                    mensagem: 'Produto Removido com sucesso',
                 });
             }
         )
