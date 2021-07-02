@@ -72,7 +72,7 @@ router.post('/', jsonParser, (req, res, next) => {
             
         )
     })
-});
+}); 
 
 router.put('/', jsonParser, (req, res, next) => {
     console.log(req.body);
