@@ -15,4 +15,6 @@ Após tudo configurado, vá até a pasta da api e inicie o node com o comando no
 
 Estando tudo configurado e iniciado é só começar os testes no Postman.
 
+O PDF é gerado na pasta raiz da api com o nome: reportPedido.
+
 Qualquer dúvida é só falar, desde já, agradeço a oportunidade.
